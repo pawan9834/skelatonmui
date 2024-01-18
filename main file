@@ -1,0 +1,28 @@
+    const [requesting, setRequesting] = useState(true);
+
+
+const getUserDetails = (userId: string) => {
+        setRequesting(true);
+        gets(`/admin/user/profile/${userId}`).then(res => {
+            console.info("Getted")
+            setUser(res.data.data.details);
+            setDateLevelData(res.data.data.dates);
+            setRequesting(false);
+        }).catch(err => {
+            console.error(err);
+            console.info("Error in Getting");
+        })
+        setRequesting(false);
+    }
+
+
+
+ <Box sx={{ mt: 2 }}>
+                        {
+                            requesting && (<UserDetailSkeleton />)
+                        }{
+                            !requesting &&
+                            <UserData dateLevelData={dateLevelData} data={user} />
+                        }
+
+                    </Box>
